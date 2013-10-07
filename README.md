@@ -1,4 +1,62 @@
-Android-Empty-Layout
+Android Empty Layout
 ====================
 
-A library for showing different types of layouts when a list view is empty
+A library for showing different types of layouts when a list view is empty. These layouts can be shown when,
+* the list is loading
+* the list has no item to display
+* an error occured trying to load items
+
+Loading animation is also supported.
+
+Screenshots
+-----------
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "List")
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Loading state")
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Empty state")
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Error state")
+
+Usage
+-----
+1. Import the library project into your workspace
+2. In the `onCreate` event of your activity use the following code.
+
+```java
+EmptyLayout emptyLayout = new EmptyLayout(this, getListView());
+```
+3. When you want to show the loading animation, use this code.
+
+```java
+emptyLayout.showEmpty();
+```
+4. When you want to show any error, use this code.
+
+```java
+emptyLayout.showError();
+```
+4. When your list doesn't have any item to show, use this code.
+
+```java
+emptyLayout.showEmpty();
+```
+Thats all you have to do to use this library. You customize its behavior though.
+
+Customization
+-------------
+There are bunch of methods to let you customize this pattern. Use the methods like this.
+
+```java
+emptyLayout.setLoadingMessage('Please wait...');
+```
+
+Some useful methods are given below
+* `showEmpty`
+* `showLoading`
+* `setLoadingView`
+* `setEmptyView`
+* `setErrorView`
+* `setLoadingAnimation`
+* `setErrorMessage`
+* `setLoadingMessage`
+* `setEmptyMessage`
+
+and there is more...
