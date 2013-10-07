@@ -20,24 +20,24 @@ Usage
 1. Import the library project into your workspace
 2. In the `onCreate` event of your activity use the following code.
 
-```java
-EmptyLayout emptyLayout = new EmptyLayout(this, getListView());
-```
+  ```java
+  EmptyLayout emptyLayout = new EmptyLayout(this, getListView());
+  ```
 3. When you want to show the loading animation, use this code.
 
-```java
-emptyLayout.showEmpty();
-```
+  ```java
+  emptyLayout.showEmpty();
+  ```
 4. When you want to show any error, use this code.
 
-```java
-emptyLayout.showError();
-```
+  ```java
+  emptyLayout.showError();
+  ```
 4. When your list doesn't have any item to show, use this code.
 
-```java
-emptyLayout.showEmpty();
-```
+  ```java
+  emptyLayout.showEmpty();
+  ```
 Thats all you have to do to use this library. You customize its behavior though.
 
 Customization
