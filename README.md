@@ -10,10 +10,10 @@ Loading animation is also supported.
 
 Screenshots
 -----------
-![alt text](https://github.com/alamkanak/Android-Empty-Layout/blob/master/Screenshots/Screen01.png "List")
-![alt text](https://github.com/alamkanak/Android-Empty-Layout/blob/master/Screenshots/Screen02.png "Loading state")
-![alt text](https://github.com/alamkanak/Android-Empty-Layout/blob/master/Screenshots/Screen03.png "Empty state")
-![alt text](https://github.com/alamkanak/Android-Empty-Layout/blob/master/Screenshots/Screen04.png "Error state")
+![alt text](https://github.com/alamkanak/Android-Empty-Layout/raw/master/Screenshots/Screen01.png "List")
+![alt text](https://github.com/alamkanak/Android-Empty-Layout/raw/master/Screenshots/Screen02.png "Loading state")
+![alt text](https://github.com/alamkanak/Android-Empty-Layout/raw/master/Screenshots/Screen03.png "Empty state")
+![alt text](https://github.com/alamkanak/Android-Empty-Layout/raw/master/Screenshots/Screen04.png "Error state")
 
 Usage
 -----
