@@ -60,3 +60,7 @@ Some useful methods are given below
 * `setEmptyMessage`
 
 and there is more...
+
+Example
+-------
+A [simple example](https://github.com/alamkanak/Android-Empty-Layout/tree/master/EmptyLayoutSample) is also available.
