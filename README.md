@@ -10,10 +10,10 @@ Loading animation is also supported.
 
 Screenshots
 -----------
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "List")
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Loading state")
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Empty state")
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Error state")
+![alt text](https://github.com/alamkanak/Android-Empty-Layout/blob/master/Screenshots/Screen01.png "List")
+![alt text](https://github.com/alamkanak/Android-Empty-Layout/blob/master/Screenshots/Screen02.png "Loading state")
+![alt text](https://github.com/alamkanak/Android-Empty-Layout/blob/master/Screenshots/Screen03.png "Empty state")
+![alt text](https://github.com/alamkanak/Android-Empty-Layout/blob/master/Screenshots/Screen04.png "Error state")
 
 Usage
 -----
@@ -45,7 +45,7 @@ Customization
 There are bunch of methods to let you customize this pattern. Use the methods like this.
 
 ```java
-emptyLayout.setLoadingMessage('Please wait...');
+emptyLayout.setLoadingMessage("Please wait...");
 ```
 
 Some useful methods are given below
