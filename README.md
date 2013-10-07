@@ -26,7 +26,7 @@ Usage
 3. When you want to show the loading animation, use this code.
 
   ```java
-  emptyLayout.showEmpty();
+  emptyLayout.showLoading();
   ```
 4. When you want to show any error, use this code.
 
