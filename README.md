@@ -17,23 +17,24 @@ Screenshots
 
 Usage
 -----
-1. Import the library project into your workspace
-2. In the `onCreate` event of your activity use the following code.
+1. Import the [library project](https://github.com/alamkanak/Android-Empty-Layout/tree/master/EmptyLayout) into your workspace.
+2. Use the imported [project as a library](http://developer.android.com/tools/projects/projects-eclipse.html#ReferencingLibraryProject) for your project.
+3. In the `onCreate` event of your activity use the following code.
 
   ```java
   EmptyLayout emptyLayout = new EmptyLayout(this, getListView());
   ```
-3. When you want to show the loading animation, use this code.
+4. When you want to show the loading animation, use this code.
 
   ```java
   emptyLayout.showLoading();
   ```
-4. When you want to show any error, use this code.
+5. When you want to show any error, use this code.
 
   ```java
   emptyLayout.showError();
   ```
-4. When your list doesn't have any item to show, use this code.
+6. When your list doesn't have any item to show, use this code.
 
   ```java
   emptyLayout.showEmpty();
