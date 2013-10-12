@@ -39,7 +39,7 @@ Usage
   ```java
   emptyLayout.showEmpty();
   ```
-Thats all you have to do to use this library. You customize its behavior though.
+Thats all you have to do to use this library. You may want to customize its behavior though.
 
 Customization
 -------------
