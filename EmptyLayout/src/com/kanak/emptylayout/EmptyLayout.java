@@ -350,7 +350,7 @@ public class EmptyLayout {
      * Sets if a button will be shown in the empty view
      * @param showEmptyButton will a button be shown in the empty view
      */
-	public void setEmptyButtonShown(boolean showEmptyButton) {
+	public void setShowEmptyButton(boolean showEmptyButton) {
 		this.mShowEmptyButton = showEmptyButton;
 	}
 
@@ -366,7 +366,7 @@ public class EmptyLayout {
      * Sets if a button will be shown in the loading view
      * @param showEmptyButton will a button be shown in the loading view
      */
-	public void setLoadingButtonShown(boolean showLoadingButton) {
+	public void setShowLoadingButton(boolean showLoadingButton) {
 		this.mShowLoadingButton = showLoadingButton;
 	}
 
@@ -382,7 +382,7 @@ public class EmptyLayout {
      * Sets if a button will be shown in the error view
      * @param showEmptyButton will a button be shown in the error view
      */
-	public void setErrorButtonShown(boolean showErrorButton) {
+	public void setShowErrorButton(boolean showErrorButton) {
 		this.mShowErrorButton = showErrorButton;
 	}
     

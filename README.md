@@ -52,6 +52,7 @@ emptyLayout.setLoadingMessage("Please wait...");
 Some useful methods are given below
 * `showEmpty`
 * `showLoading`
+* `showError`
 * `setLoadingView`
 * `setEmptyView`
 * `setErrorView`
@@ -59,6 +60,12 @@ Some useful methods are given below
 * `setErrorMessage`
 * `setLoadingMessage`
 * `setEmptyMessage`
+* `setEmptyViewButtonClickListener`
+* `setLoadingViewButtonClickListener`
+* `setErrorViewButtonClickListener`
+* `setShowEmptyButton`
+* `setShowLoadingButton`
+* `setShowErrorButton`
 
 and there is more...
 
