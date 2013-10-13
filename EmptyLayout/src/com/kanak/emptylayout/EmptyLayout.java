@@ -28,8 +28,12 @@ public class EmptyLayout {
 	private int mEmptyMessageViewId;
 	private int mLoadingMessageViewId;
 
+    private View.OnClickListener mLoadingViewClickListener;
+    private View.OnClickListener mEmptyViewClickListener;
+    private View.OnClickListener mErrorViewClickListener;
+
 	// ---------------------------
-	// static variables
+	// static variables 
 	// ---------------------------
 	/**
 	 * The empty state
@@ -281,7 +285,64 @@ public class EmptyLayout {
 		this.mLoadingAnimationViewId = loadingAnimationViewId;
 	}
 
-	// ---------------------------
+    /**
+     * Sets the OnClickListener to LoadingView
+     * @param loadingViewClickListener OnClickListener Object
+     */
+    public void setLoadingViewClickListener(View.OnClickListener loadingViewClickListener) {
+        this.mLoadingViewClickListener = loadingViewClickListener;
+        if(mLoadingView != null)
+            mLoadingView.setOnClickListener(mLoadingViewClickListener);
+    }
+
+    /**
+     * Sets the OnClickListener to EmptyView
+     * @param emptyViewClickListener OnClickListener Object
+     */
+    public void setEmptyViewClickListener(View.OnClickListener emptyViewClickListener) {
+        this.mEmptyViewClickListener = emptyViewClickListener;
+        if(mEmptyView != null)
+            mEmptyView.setOnClickListener(mEmptyViewClickListener);
+    }
+
+    /**
+     * Sets the OnClickListener to ErrorView
+     * @param errorViewClickListener OnClickListener Object
+     */
+    public void setErrorViewClickListener(View.OnClickListener errorViewClickListener) {
+        this.mErrorViewClickListener = errorViewClickListener;
+        if(mErrorView != null)
+            mErrorView.setOnClickListener(mErrorViewClickListener);
+    }
+
+
+    /**
+     * Gets the OnClickListener which perform when LoadingView was click
+     * @return
+     */
+    public View.OnClickListener getLoadingViewClickListener() {
+        return mLoadingViewClickListener;
+    }
+
+
+    /**
+     * Gets the OnClickListener which perform when EmptyView was click
+     * @return
+     */
+    public View.OnClickListener getEmptyViewClickListener() {
+        return mEmptyViewClickListener;
+    }
+
+
+    /**
+     * Gets the OnClickListener which perform when ErrorView was click
+     * @return
+     */
+    public View.OnClickListener getErrorViewClickListener() {
+        return mErrorViewClickListener;
+    }
+
+    // ---------------------------
 	// private methods
 	// ---------------------------	
 	
