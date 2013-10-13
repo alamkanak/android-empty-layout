@@ -16,4 +16,12 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:gravity="center_horizontal" />
 
+    <Button
+        android:id="@+id/buttonEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="@string/empty_button" />
+
 </LinearLayout>

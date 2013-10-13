@@ -8,13 +8,21 @@ import com.kanak.emptylayout.EmptyLayout;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import android.app.ListActivity;
 
 public class MainActivity extends ListActivity {
 
 	private EmptyLayout mEmptyLayout; // this is required to show different layouts (loading or empty or error)
 	private ArrayAdapter<String> mAdapter;
+	private View.OnClickListener mErrorClickListener = new OnClickListener() {			
+		@Override
+		public void onClick(View v) {
+			Toast.makeText(MainActivity.this, "Try again button clicked", Toast.LENGTH_LONG).show();			
+		}
+	};
 	
 	// the list items
 	static final String[] MOVIES = new String[] { 
@@ -45,6 +53,7 @@ public class MainActivity extends ListActivity {
 
 		// initialize the empty view
 		mEmptyLayout = new EmptyLayout(this, getListView());
+		mEmptyLayout.setErrorButtonClickListener(mErrorClickListener);
 		
 		// populate the list view
 		populateList();

@@ -27,10 +27,12 @@ public class EmptyLayout {
 	private int mErrorMessageViewId;
 	private int mEmptyMessageViewId;
 	private int mLoadingMessageViewId;
-
-    private View.OnClickListener mLoadingViewClickListener;
-    private View.OnClickListener mEmptyViewClickListener;
-    private View.OnClickListener mErrorViewClickListener;
+	private LayoutInflater mInflater;
+	private boolean mViewsAdded;
+	private int mLoadingAnimationViewId;	
+	private View.OnClickListener mLoadingButtonClickListener;
+    private View.OnClickListener mEmptyButtonClickListener;
+    private View.OnClickListener mErrorButtonClickListener;
 
 	// ---------------------------
 	// static variables 
@@ -55,9 +57,12 @@ public class EmptyLayout {
 	private String mErrorMessage = "Oops! Something wrong happened";
 	private String mEmptyMessage = "No items yet";
 	private String mLoadingMessage = "Please wait";
-	private LayoutInflater mInflater;
-	private boolean mViewsAdded;
-	private int mLoadingAnimationViewId;
+	private int mLoadingViewButtonId = R.id.buttonLoading;
+	private int mErrorViewButtonId = R.id.buttonError;
+	private int mEmptyViewButtonId = R.id.buttonEmpty;
+	private boolean mShowEmptyButton = true;
+	private boolean mShowLoadingButton = true;
+	private boolean mShowErrorButton = true;
 
 	// ---------------------------
 	// getters and setters
@@ -283,69 +288,161 @@ public class EmptyLayout {
 	 */
 	public void setLoadingAnimationViewId(int loadingAnimationViewId) {
 		this.mLoadingAnimationViewId = loadingAnimationViewId;
-	}
-
-    /**
-     * Sets the OnClickListener to LoadingView
-     * @param loadingViewClickListener OnClickListener Object
-     */
-    public void setLoadingViewClickListener(View.OnClickListener loadingViewClickListener) {
-        this.mLoadingViewClickListener = loadingViewClickListener;
-        if(mLoadingView != null)
-            mLoadingView.setOnClickListener(mLoadingViewClickListener);
-    }
-
-    /**
-     * Sets the OnClickListener to EmptyView
-     * @param emptyViewClickListener OnClickListener Object
-     */
-    public void setEmptyViewClickListener(View.OnClickListener emptyViewClickListener) {
-        this.mEmptyViewClickListener = emptyViewClickListener;
-        if(mEmptyView != null)
-            mEmptyView.setOnClickListener(mEmptyViewClickListener);
-    }
-
-    /**
-     * Sets the OnClickListener to ErrorView
-     * @param errorViewClickListener OnClickListener Object
-     */
-    public void setErrorViewClickListener(View.OnClickListener errorViewClickListener) {
-        this.mErrorViewClickListener = errorViewClickListener;
-        if(mErrorView != null)
-            mErrorView.setOnClickListener(mErrorViewClickListener);
-    }
-
+	}	
 
     /**
      * Gets the OnClickListener which perform when LoadingView was click
      * @return
      */
-    public View.OnClickListener getLoadingViewClickListener() {
-        return mLoadingViewClickListener;
+    public View.OnClickListener getLoadingButtonClickListener() {
+        return mLoadingButtonClickListener;
     }
 
-
+    /**
+     * Sets the OnClickListener to LoadingView
+     * @param loadingButtonClickListener OnClickListener Object
+     */
+    public void setLoadingButtonClickListener(View.OnClickListener loadingButtonClickListener) {
+        this.mLoadingButtonClickListener = loadingButtonClickListener;
+    }
+    
     /**
      * Gets the OnClickListener which perform when EmptyView was click
      * @return
      */
-    public View.OnClickListener getEmptyViewClickListener() {
-        return mEmptyViewClickListener;
+    public View.OnClickListener getEmptyButtonClickListener() {
+        return mEmptyButtonClickListener;
     }
 
-
+    /**
+     * Sets the OnClickListener to EmptyView
+     * @param emptyButtonClickListener OnClickListener Object
+     */
+    public void setEmptyButtonClickListener(View.OnClickListener emptyButtonClickListener) {
+        this.mEmptyButtonClickListener = emptyButtonClickListener;
+    }
+    
     /**
      * Gets the OnClickListener which perform when ErrorView was click
      * @return
      */
-    public View.OnClickListener getErrorViewClickListener() {
-        return mErrorViewClickListener;
+    public View.OnClickListener getErrorButtonClickListener() {
+        return mErrorButtonClickListener;
     }
+
+    /**
+     * Sets the OnClickListener to ErrorView
+     * @param errorButtonClickListener OnClickListener Object
+     */
+    public void setErrorButtonClickListener(View.OnClickListener errorButtonClickListener) {
+        this.mErrorButtonClickListener = errorButtonClickListener;
+    }
+
+    /**
+     * Gets if a button is shown in the empty view
+     * @return if a button is shown in the empty view
+     */
+    public boolean isEmptyButtonShown() {
+		return mShowEmptyButton;
+	}
+
+    /**
+     * Sets if a button will be shown in the empty view
+     * @param showEmptyButton will a button be shown in the empty view
+     */
+	public void setEmptyButtonShown(boolean showEmptyButton) {
+		this.mShowEmptyButton = showEmptyButton;
+	}
+
+	/**
+     * Gets if a button is shown in the loading view
+     * @return if a button is shown in the loading view
+     */
+	public boolean isLoadingButtonShown() {
+		return mShowLoadingButton;
+	}
+
+	/**
+     * Sets if a button will be shown in the loading view
+     * @param showEmptyButton will a button be shown in the loading view
+     */
+	public void setLoadingButtonShown(boolean showLoadingButton) {
+		this.mShowLoadingButton = showLoadingButton;
+	}
+
+	/**
+     * Gets if a button is shown in the error view
+     * @return if a button is shown in the error view
+     */
+	public boolean isErrorButtonShown() {
+		return mShowErrorButton;
+	}
+
+	/**
+     * Sets if a button will be shown in the error view
+     * @param showEmptyButton will a button be shown in the error view
+     */
+	public void setErrorButtonShown(boolean showErrorButton) {
+		this.mShowErrorButton = showErrorButton;
+	}
+    
+	/**
+	 * Gets the ID of the button in the loading view
+	 * @return the ID of the button in the loading view
+	 */
+	public int getmLoadingViewButtonId() {
+		return mLoadingViewButtonId;
+	}	
+	
+	/**
+	 * Sets the ID of the button in the loading view. This ID is required if you want the button the loading view to be click-able.
+	 * @param loadingViewButtonId the ID of the button in the loading view
+	 */
+	public void setLoadingViewButtonId(int loadingViewButtonId) {
+		this.mLoadingViewButtonId = loadingViewButtonId;
+	}
+
+	/**
+	 * Gets the ID of the button in the error view
+	 * @return the ID of the button in the error view
+	 */
+	public int getErrorViewButtonId() {
+		return mErrorViewButtonId;
+	}
+
+	/**
+	 * Sets the ID of the button in the error view. This ID is required if you want the button the error view to be click-able.
+	 * @param errorViewButtonId the ID of the button in the error view
+	 */
+	public void setErrorViewButtonId(int errorViewButtonId) {
+		this.mErrorViewButtonId = errorViewButtonId;
+	}
+
+	/**
+	 * Gets the ID of the button in the empty view
+	 * @return the ID of the button in the empty view
+	 */
+	public int getEmptyViewButtonId() {
+		return mEmptyViewButtonId;
+	}
+	
+	/**
+	 * Sets the ID of the button in the empty view. This ID is required if you want the button the empty view to be click-able.
+	 * @param emptyViewButtonId the ID of the button in the empty view
+	 */
+	public void setEmptyViewButtonId(int emptyViewButtonId) {
+		this.mEmptyViewButtonId = emptyViewButtonId;
+	}
+
+    
+
+
+    
 
     // ---------------------------
 	// private methods
 	// ---------------------------	
-	
+
 	private void changeEmptyType() {
 		
 		setDefaultValues();
@@ -419,15 +516,48 @@ public class EmptyLayout {
 		if (mEmptyView==null) {
 			mEmptyView = (ViewGroup) mInflater.inflate(R.layout.view_empty, null);
 			if (!(mEmptyMessageViewId>0)) mEmptyMessageViewId = R.id.textViewMessage;
+			if (mShowEmptyButton && mEmptyViewButtonId>0 && mEmptyButtonClickListener!=null) {
+				View emptyViewButton = mEmptyView.findViewById(mEmptyViewButtonId);
+				if (emptyViewButton != null) {
+					emptyViewButton.setOnClickListener(mEmptyButtonClickListener);
+					emptyViewButton.setVisibility(View.VISIBLE);
+				}
+			}
+			else if (mEmptyViewButtonId>0) {
+				View emptyViewButton = mEmptyView.findViewById(mEmptyViewButtonId);
+				emptyViewButton.setVisibility(View.GONE);
+			}
 		}
 		if (mLoadingView==null) {
 			mLoadingView = (ViewGroup) mInflater.inflate(R.layout.view_loading, null);
 			mLoadingAnimationViewId = R.id.imageViewLoading;
 			if (!(mLoadingMessageViewId>0)) mLoadingMessageViewId = R.id.textViewMessage;
+			if (mShowLoadingButton && mLoadingViewButtonId>0 && mLoadingButtonClickListener!=null) {
+				View loadingViewButton = mLoadingView.findViewById(mLoadingViewButtonId);
+				if (loadingViewButton != null) {
+					loadingViewButton.setOnClickListener(mLoadingButtonClickListener);
+					loadingViewButton.setVisibility(View.VISIBLE);
+				}
+			}
+			else if (mLoadingViewButtonId>0) {
+				View loadingViewButton = mLoadingView.findViewById(mLoadingViewButtonId);
+				loadingViewButton.setVisibility(View.GONE);
+			}
 		}
 		if (mErrorView==null) {
 			mErrorView = (ViewGroup) mInflater.inflate(R.layout.view_error, null);
 			if (!(mErrorMessageViewId>0)) mErrorMessageViewId = R.id.textViewMessage;
+			if (mShowErrorButton && mErrorViewButtonId>0 && mErrorButtonClickListener!=null) {
+				View errorViewButton = mErrorView.findViewById(mErrorViewButtonId);
+				if (errorViewButton != null) {
+					errorViewButton.setOnClickListener(mErrorButtonClickListener);
+					errorViewButton.setVisibility(View.VISIBLE);
+				}
+			}
+			else if (mErrorViewButtonId>0) {
+				View errorViewButton = mErrorView.findViewById(mErrorViewButtonId);
+				errorViewButton.setVisibility(View.GONE);
+			}
 		}
 	}
 	

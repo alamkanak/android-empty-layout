@@ -22,4 +22,11 @@
         android:gravity="center_horizontal"
         android:layout_gravity="center_horizontal" />
 
+    <Button
+        android:id="@+id/buttonLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/loading_button" />
+
 </LinearLayout>
