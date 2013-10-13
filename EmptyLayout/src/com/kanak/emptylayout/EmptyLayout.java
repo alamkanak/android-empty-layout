@@ -33,7 +33,7 @@ public class EmptyLayout {
     private View.OnClickListener mErrorViewClickListener;
 
 	// ---------------------------
-	// static variables
+	// static variables 
 	// ---------------------------
 	/**
 	 * The empty state
