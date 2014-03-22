@@ -22,24 +22,30 @@ Usage
 3. In the `onCreate` event of your activity use the following code.
 
   ```java
+  mListAdapter.clear();
   EmptyLayout emptyLayout = new EmptyLayout(this, getListView());
   ```
 4. When you want to show the loading animation, use this code.
 
   ```java
+  mListAdapter.clear();
   emptyLayout.showLoading();
   ```
 5. When you want to show any error, use this code.
 
   ```java
+  mListAdapter.clear();
   emptyLayout.showError();
   ```
 6. When your list doesn't have any item to show, use this code.
 
   ```java
+  mListAdapter.clear();
   emptyLayout.showEmpty();
   ```
 Thats all you have to do to use this library. You may want to customize its behavior though.
+
+P.S. Make sure you always clear the list adapter before calling `showEmpty`, `showLoading` and `showError`. The list have to empty after all.
 
 Customization
 -------------
