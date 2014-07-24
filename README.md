@@ -1,6 +1,8 @@
 Android Empty Layout
 ====================
 
+**Please note that this project is not being maintained now. Hopefully a new version will be available soon.**
+
 A library for showing different types of layouts when a list view is empty. These layouts can be shown when,
 * the list is loading
 * the list has no item to display
