@@ -448,23 +448,32 @@ public class EmptyLayout {
 		setDefaultValues();
 		refreshMessages();
 
-		// insert views in the root view
-		if (!mViewsAdded) {
-			RelativeLayout.LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
-			lp.addRule(RelativeLayout.CENTER_VERTICAL);
-			RelativeLayout rl = new RelativeLayout(mContext);
-			rl.setLayoutParams(lp);
-			if (mEmptyView!=null) rl.addView(mEmptyView);
-			if (mLoadingView!=null) rl.addView(mLoadingView);
-			if (mErrorView!=null) rl.addView(mErrorView);
-			mViewsAdded = true;			
-
-			ViewGroup parent = (ViewGroup) mListView.getParent();
-			parent.addView(rl);
-			mListView.setEmptyView(rl);
-		}
-		
+        // insert views in the root view
+        if (!mViewsAdded) {
+            RelativeLayout.LayoutParams lp = new LayoutParams(mListView.getWidth(), mListView.getHeight());
+            lp.topMargin = mListView.getTop();
+            lp.leftMargin = mListView.getLeft();
+            RelativeLayout rl = new RelativeLayout(mContext);
+            rl.setLayoutParams(lp);
+            if (mEmptyView != null) {
+                rl.addView(mEmptyView);
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mEmptyView.getLayoutParams();
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                mEmptyView.setLayoutParams(layoutParams);
+            }
+            if (mLoadingView != null) {
+                rl.addView(mLoadingView);
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mLoadingView.getLayoutParams();
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                mLoadingView.setLayoutParams(layoutParams);
+            }
+            if (mErrorView != null) {
+                rl.addView(mErrorView);
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mErrorView.getLayoutParams();
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                mErrorView.setLayoutParams(layoutParams);
+            }
+        }
 		
 		// change empty type
 		if (mListView!=null) {
