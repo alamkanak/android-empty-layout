@@ -448,35 +448,28 @@ public class EmptyLayout {
 
 		// change empty type
 		if (mListView!=null) {
-            final View showedView;
 			View loadingAnimationView = null;
 			if (mLoadingAnimationViewId > 0) loadingAnimationView = ((Activity) mContext).findViewById(mLoadingAnimationViewId);
 			switch (mEmptyType) {
 			case TYPE_EMPTY:
-                showedView = mEmptyView;
-                if (mStateViewLayout!=null) mStateViewLayout.setVisibility(View.VISIBLE);
 				if (mEmptyView!=null) mEmptyView.setVisibility(View.VISIBLE);
-				if (mErrorView!=null) mErrorView.setVisibility(View.GONE);
+				if (mErrorView!=null) mErrorView.setVisibility(View.INVISIBLE);
 				if (mLoadingView!=null) {
-					mLoadingView.setVisibility(View.GONE);
+					mLoadingView.setVisibility(View.INVISIBLE);
 					if (loadingAnimationView!=null && loadingAnimationView.getAnimation()!=null) loadingAnimationView.getAnimation().cancel();
 				}
-				break;
+                break;
 			case TYPE_ERROR:
-                showedView = mErrorView;
-                if (mStateViewLayout!=null) mStateViewLayout.setVisibility(View.VISIBLE);
-				if (mEmptyView!=null) mEmptyView.setVisibility(View.GONE);
+				if (mEmptyView!=null) mEmptyView.setVisibility(View.INVISIBLE);
 				if (mErrorView!=null) mErrorView.setVisibility(View.VISIBLE);
 				if (mLoadingView!=null) {
-					mLoadingView.setVisibility(View.GONE);
+					mLoadingView.setVisibility(View.INVISIBLE);
 					if (loadingAnimationView!=null && loadingAnimationView.getAnimation()!=null) loadingAnimationView.getAnimation().cancel();
 				}
-				break;
+                break;
 			case TYPE_LOADING:
-                showedView = mLoadingView;
-                if (mStateViewLayout!=null) mStateViewLayout.setVisibility(View.VISIBLE);
-				if (mEmptyView!=null) mEmptyView.setVisibility(View.GONE);
-				if (mErrorView!=null) mErrorView.setVisibility(View.GONE);
+				if (mEmptyView!=null) mEmptyView.setVisibility(View.INVISIBLE);
+				if (mErrorView!=null) mErrorView.setVisibility(View.INVISIBLE);
 				if (mLoadingView!=null) {
 					mLoadingView.setVisibility(View.VISIBLE);
 					if (mLoadingAnimation != null && loadingAnimationView!=null) {
@@ -485,28 +478,11 @@ public class EmptyLayout {
 					else if (loadingAnimationView!=null) {
 						loadingAnimationView.startAnimation(getRotateAnimation());
 					}
-				}				
-				break;
+				}
+                break;
 			default:
-                showedView = null;
 				break;
 			}
-
-            if (showedView!=null) {
-                int width = showedView.getWidth();
-                int height = showedView.getHeight();
-
-                if (width == 0 && height == 0) {
-                    showedView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            layoutInListCenter(showedView);
-                        }
-                    });
-                } else {
-                    layoutInListCenter(showedView);
-                }
-            }
         }
 	}
 
@@ -549,8 +525,15 @@ public class EmptyLayout {
 				}
 			} else if (mEmptyViewButtonId > 0) {
 				View emptyViewButton = mEmptyView.findViewById(mEmptyViewButtonId);
-				emptyViewButton.setVisibility(View.GONE);
+				emptyViewButton.setVisibility(View.INVISIBLE);
 			}
+
+            mEmptyView.post(new Runnable() {
+                @Override
+                public void run() {
+                    layoutInListCenter(mEmptyView);
+                }
+            });
 		}
 		if (mLoadingView == null) {
 			mLoadingView = (ViewGroup) mInflater.inflate(R.layout.view_loading, mStateViewLayout, false);
@@ -565,8 +548,15 @@ public class EmptyLayout {
 				}
 			} else if (mLoadingViewButtonId > 0) {
 				View loadingViewButton = mLoadingView.findViewById(mLoadingViewButtonId);
-				loadingViewButton.setVisibility(View.GONE);
+				loadingViewButton.setVisibility(View.INVISIBLE);
 			}
+
+            mLoadingView.post(new Runnable() {
+                @Override
+                public void run() {
+                    layoutInListCenter(mLoadingView);
+                }
+            });
 		}
 		if (mErrorView == null) {
 			mErrorView = (ViewGroup) mInflater.inflate(R.layout.view_error, mStateViewLayout, false);
@@ -580,8 +570,15 @@ public class EmptyLayout {
 				}
 			} else if (mErrorViewButtonId > 0) {
 				View errorViewButton = mErrorView.findViewById(mErrorViewButtonId);
-				errorViewButton.setVisibility(View.GONE);
+				errorViewButton.setVisibility(View.INVISIBLE);
 			}
+
+            mErrorView.post(new Runnable() {
+                @Override
+                public void run() {
+                    layoutInListCenter(mErrorView);
+                }
+            });
 		}
 	}
 	
