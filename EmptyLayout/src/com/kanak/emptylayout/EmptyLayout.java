@@ -448,10 +448,12 @@ public class EmptyLayout {
 
 		// change empty type
 		if (mListView!=null) {
+            final View showedView;
 			View loadingAnimationView = null;
 			if (mLoadingAnimationViewId > 0) loadingAnimationView = ((Activity) mContext).findViewById(mLoadingAnimationViewId);
 			switch (mEmptyType) {
 			case TYPE_EMPTY:
+                showedView = mEmptyView;
                 if (mStateViewLayout!=null) mStateViewLayout.setVisibility(View.VISIBLE);
 				if (mEmptyView!=null) mEmptyView.setVisibility(View.VISIBLE);
 				if (mErrorView!=null) mErrorView.setVisibility(View.GONE);
@@ -461,6 +463,7 @@ public class EmptyLayout {
 				}
 				break;
 			case TYPE_ERROR:
+                showedView = mErrorView;
                 if (mStateViewLayout!=null) mStateViewLayout.setVisibility(View.VISIBLE);
 				if (mEmptyView!=null) mEmptyView.setVisibility(View.GONE);
 				if (mErrorView!=null) mErrorView.setVisibility(View.VISIBLE);
@@ -470,6 +473,7 @@ public class EmptyLayout {
 				}
 				break;
 			case TYPE_LOADING:
+                showedView = mLoadingView;
                 if (mStateViewLayout!=null) mStateViewLayout.setVisibility(View.VISIBLE);
 				if (mEmptyView!=null) mEmptyView.setVisibility(View.GONE);
 				if (mErrorView!=null) mErrorView.setVisibility(View.GONE);
@@ -484,10 +488,38 @@ public class EmptyLayout {
 				}				
 				break;
 			default:
+                showedView = null;
 				break;
 			}
-		}
+
+            if (showedView!=null) {
+                int width = showedView.getWidth();
+                int height = showedView.getHeight();
+
+                if (width == 0 && height == 0) {
+                    showedView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            layoutInListCenter(showedView);
+                        }
+                    });
+                } else {
+                    layoutInListCenter(showedView);
+                }
+            }
+        }
 	}
+
+    private void layoutInListCenter(View v) {
+        int width = v.getWidth();
+        int height = v.getHeight();
+
+        int left = (int) (mListView.getX() + mListView.getWidth()/2 - width/2);
+        int top = (int) (mListView.getY() + mListView.getHeight()/2 - height/2);
+        ((LayoutParams) v.getLayoutParams()).leftMargin = left;
+        ((LayoutParams) v.getLayoutParams()).topMargin = top;
+        v.requestLayout();
+    }
 	
 	private void refreshMessages() {
 		if (mEmptyMessageViewId>0 && mEmptyMessage!=null) ((TextView)mEmptyView.findViewById(mEmptyMessageViewId)).setText(mEmptyMessage);
