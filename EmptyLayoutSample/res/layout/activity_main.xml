@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:padding="8dp" >
+        android:padding="10dp" >
 
         <Button
             android:layout_width="wrap_content"
