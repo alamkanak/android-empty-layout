@@ -1,7 +1,5 @@
 package com.kanak.emptylayout;
 
-import com.kanak.emptylayout.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,6 +17,7 @@ import android.widget.TextView;
 public class EmptyLayout {
 
 	private Context mContext;
+	private RelativeLayout mStateViewLayout;
 	private ViewGroup mLoadingView;
 	private ViewGroup mEmptyView;
 	private ViewGroup mErrorView;
@@ -28,7 +27,6 @@ public class EmptyLayout {
 	private int mEmptyMessageViewId;
 	private int mLoadingMessageViewId;
 	private LayoutInflater mInflater;
-	private boolean mViewsAdded;
 	private int mLoadingAnimationViewId;	
 	private View.OnClickListener mLoadingButtonClickListener;
     private View.OnClickListener mEmptyButtonClickListener;
@@ -233,7 +231,7 @@ public class EmptyLayout {
 	/**
 	 * Sets the message to be shown when the list will be empty for not having any item to display
 	 * @param emptyMessage the message
-	 * @param messageId the id of the text view within the empty layout whose text will be changed into this message
+	 * @param messageViewId the id of the text view within the empty layout whose text will be changed into this message
 	 */
 	public void setEmptyMessage(String emptyMessage, int messageViewId) {
 		this.mEmptyMessage = emptyMessage;
@@ -364,7 +362,7 @@ public class EmptyLayout {
 
 	/**
      * Sets if a button will be shown in the loading view
-     * @param showEmptyButton will a button be shown in the loading view
+     * @param showLoadingButton will a button be shown in the loading view
      */
 	public void setShowLoadingButton(boolean showLoadingButton) {
 		this.mShowLoadingButton = showLoadingButton;
@@ -380,7 +378,7 @@ public class EmptyLayout {
 
 	/**
      * Sets if a button will be shown in the error view
-     * @param showEmptyButton will a button be shown in the error view
+     * @param showErrorButton will a button be shown in the error view
      */
 	public void setShowErrorButton(boolean showErrorButton) {
 		this.mShowErrorButton = showErrorButton;
@@ -448,48 +446,30 @@ public class EmptyLayout {
 		setDefaultValues();
 		refreshMessages();
 
-		// insert views in the root view
-		if (!mViewsAdded) {
-			RelativeLayout.LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
-			lp.addRule(RelativeLayout.CENTER_VERTICAL);
-			RelativeLayout rl = new RelativeLayout(mContext);
-			rl.setLayoutParams(lp);
-			if (mEmptyView!=null) rl.addView(mEmptyView);
-			if (mLoadingView!=null) rl.addView(mLoadingView);
-			if (mErrorView!=null) rl.addView(mErrorView);
-			mViewsAdded = true;			
-
-			ViewGroup parent = (ViewGroup) mListView.getParent();
-			parent.addView(rl);
-			mListView.setEmptyView(rl);
-		}
-		
-		
 		// change empty type
 		if (mListView!=null) {
 			View loadingAnimationView = null;
-			if (mLoadingAnimationViewId > 0) loadingAnimationView = ((Activity) mContext).findViewById(mLoadingAnimationViewId); 
+			if (mLoadingAnimationViewId > 0) loadingAnimationView = ((Activity) mContext).findViewById(mLoadingAnimationViewId);
 			switch (mEmptyType) {
 			case TYPE_EMPTY:
 				if (mEmptyView!=null) mEmptyView.setVisibility(View.VISIBLE);
-				if (mErrorView!=null) mErrorView.setVisibility(View.GONE);
+				if (mErrorView!=null) mErrorView.setVisibility(View.INVISIBLE);
 				if (mLoadingView!=null) {
-					mLoadingView.setVisibility(View.GONE); 
+					mLoadingView.setVisibility(View.INVISIBLE);
 					if (loadingAnimationView!=null && loadingAnimationView.getAnimation()!=null) loadingAnimationView.getAnimation().cancel();
 				}
-				break;
+                break;
 			case TYPE_ERROR:
-				if (mEmptyView!=null) mEmptyView.setVisibility(View.GONE);
+				if (mEmptyView!=null) mEmptyView.setVisibility(View.INVISIBLE);
 				if (mErrorView!=null) mErrorView.setVisibility(View.VISIBLE);
 				if (mLoadingView!=null) {
-					mLoadingView.setVisibility(View.GONE); 
+					mLoadingView.setVisibility(View.INVISIBLE);
 					if (loadingAnimationView!=null && loadingAnimationView.getAnimation()!=null) loadingAnimationView.getAnimation().cancel();
 				}
-				break;
+                break;
 			case TYPE_LOADING:
-				if (mEmptyView!=null) mEmptyView.setVisibility(View.GONE);
-				if (mErrorView!=null) mErrorView.setVisibility(View.GONE);
+				if (mEmptyView!=null) mEmptyView.setVisibility(View.INVISIBLE);
+				if (mErrorView!=null) mErrorView.setVisibility(View.INVISIBLE);
 				if (mLoadingView!=null) {
 					mLoadingView.setVisibility(View.VISIBLE);
 					if (mLoadingAnimation != null && loadingAnimationView!=null) {
@@ -498,13 +478,24 @@ public class EmptyLayout {
 					else if (loadingAnimationView!=null) {
 						loadingAnimationView.startAnimation(getRotateAnimation());
 					}
-				}				
-				break;
+				}
+                break;
 			default:
 				break;
 			}
-		}
+        }
 	}
+
+    private void layoutInListCenter(View v) {
+        int width = v.getWidth();
+        int height = v.getHeight();
+
+        int left = (int) (mListView.getX() + mListView.getWidth()/2 - width/2);
+        int top = (int) (mListView.getY() + mListView.getHeight()/2 - height/2);
+        ((LayoutParams) v.getLayoutParams()).leftMargin = left;
+        ((LayoutParams) v.getLayoutParams()).topMargin = top;
+        v.requestLayout();
+    }
 	
 	private void refreshMessages() {
 		if (mEmptyMessageViewId>0 && mEmptyMessage!=null) ((TextView)mEmptyView.findViewById(mEmptyMessageViewId)).setText(mEmptyMessage);
@@ -513,51 +504,81 @@ public class EmptyLayout {
 	}
 
 	private void setDefaultValues() {
-		if (mEmptyView==null) {
-			mEmptyView = (ViewGroup) mInflater.inflate(R.layout.view_empty, null);
-			if (!(mEmptyMessageViewId>0)) mEmptyMessageViewId = R.id.textViewMessage;
-			if (mShowEmptyButton && mEmptyViewButtonId>0 && mEmptyButtonClickListener!=null) {
+		if (mStateViewLayout==null) {
+			mStateViewLayout = new RelativeLayout(mContext);
+			mStateViewLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+			ViewGroup parent = (ViewGroup) mListView.getParent();
+			parent.addView(mStateViewLayout);
+			mListView.setEmptyView(mStateViewLayout);
+		}
+
+		if (mEmptyView == null) {
+			mEmptyView = (ViewGroup) mInflater.inflate(R.layout.view_empty, mStateViewLayout, false);
+            mStateViewLayout.addView(mEmptyView);
+			if (!(mEmptyMessageViewId > 0)) mEmptyMessageViewId = R.id.textViewMessage;
+			if (mShowEmptyButton && mEmptyViewButtonId > 0 && mEmptyButtonClickListener != null) {
 				View emptyViewButton = mEmptyView.findViewById(mEmptyViewButtonId);
 				if (emptyViewButton != null) {
 					emptyViewButton.setOnClickListener(mEmptyButtonClickListener);
 					emptyViewButton.setVisibility(View.VISIBLE);
 				}
-			}
-			else if (mEmptyViewButtonId>0) {
+			} else if (mEmptyViewButtonId > 0) {
 				View emptyViewButton = mEmptyView.findViewById(mEmptyViewButtonId);
-				emptyViewButton.setVisibility(View.GONE);
+				emptyViewButton.setVisibility(View.INVISIBLE);
 			}
+
+            mEmptyView.post(new Runnable() {
+                @Override
+                public void run() {
+                    layoutInListCenter(mEmptyView);
+                }
+            });
 		}
-		if (mLoadingView==null) {
-			mLoadingView = (ViewGroup) mInflater.inflate(R.layout.view_loading, null);
+		if (mLoadingView == null) {
+			mLoadingView = (ViewGroup) mInflater.inflate(R.layout.view_loading, mStateViewLayout, false);
+            mStateViewLayout.addView(mLoadingView);
 			mLoadingAnimationViewId = R.id.imageViewLoading;
-			if (!(mLoadingMessageViewId>0)) mLoadingMessageViewId = R.id.textViewMessage;
-			if (mShowLoadingButton && mLoadingViewButtonId>0 && mLoadingButtonClickListener!=null) {
+			if (!(mLoadingMessageViewId > 0)) mLoadingMessageViewId = R.id.textViewMessage;
+			if (mShowLoadingButton && mLoadingViewButtonId > 0 && mLoadingButtonClickListener != null) {
 				View loadingViewButton = mLoadingView.findViewById(mLoadingViewButtonId);
 				if (loadingViewButton != null) {
 					loadingViewButton.setOnClickListener(mLoadingButtonClickListener);
 					loadingViewButton.setVisibility(View.VISIBLE);
 				}
-			}
-			else if (mLoadingViewButtonId>0) {
+			} else if (mLoadingViewButtonId > 0) {
 				View loadingViewButton = mLoadingView.findViewById(mLoadingViewButtonId);
-				loadingViewButton.setVisibility(View.GONE);
+				loadingViewButton.setVisibility(View.INVISIBLE);
 			}
+
+            mLoadingView.post(new Runnable() {
+                @Override
+                public void run() {
+                    layoutInListCenter(mLoadingView);
+                }
+            });
 		}
-		if (mErrorView==null) {
-			mErrorView = (ViewGroup) mInflater.inflate(R.layout.view_error, null);
-			if (!(mErrorMessageViewId>0)) mErrorMessageViewId = R.id.textViewMessage;
-			if (mShowErrorButton && mErrorViewButtonId>0 && mErrorButtonClickListener!=null) {
+		if (mErrorView == null) {
+			mErrorView = (ViewGroup) mInflater.inflate(R.layout.view_error, mStateViewLayout, false);
+            mStateViewLayout.addView(mErrorView);
+			if (!(mErrorMessageViewId > 0)) mErrorMessageViewId = R.id.textViewMessage;
+			if (mShowErrorButton && mErrorViewButtonId > 0 && mErrorButtonClickListener != null) {
 				View errorViewButton = mErrorView.findViewById(mErrorViewButtonId);
 				if (errorViewButton != null) {
 					errorViewButton.setOnClickListener(mErrorButtonClickListener);
 					errorViewButton.setVisibility(View.VISIBLE);
 				}
-			}
-			else if (mErrorViewButtonId>0) {
+			} else if (mErrorViewButtonId > 0) {
 				View errorViewButton = mErrorView.findViewById(mErrorViewButtonId);
-				errorViewButton.setVisibility(View.GONE);
+				errorViewButton.setVisibility(View.INVISIBLE);
 			}
+
+            mErrorView.post(new Runnable() {
+                @Override
+                public void run() {
+                    layoutInListCenter(mErrorView);
+                }
+            });
 		}
 	}
 	
@@ -565,7 +586,7 @@ public class EmptyLayout {
 		final RotateAnimation rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, .5f, Animation.RELATIVE_TO_SELF, .5f);
 		rotateAnimation.setDuration(1500);		
 		rotateAnimation.setInterpolator(new LinearInterpolator());
-		rotateAnimation.setRepeatCount(Animation.INFINITE);		
+		rotateAnimation.setRepeatCount(Animation.INFINITE);
 		return rotateAnimation;
 	}
 	
